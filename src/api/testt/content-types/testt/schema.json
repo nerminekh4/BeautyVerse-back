@@ -1,17 +1,16 @@
 {
   "kind": "collectionType",
-  "collectionName": "tests",
+  "collectionName": "testts",
   "info": {
-    "singularName": "test",
-    "pluralName": "tests",
-    "displayName": "test",
-    "description": ""
+    "singularName": "testt",
+    "pluralName": "testts",
+    "displayName": "testt"
   },
   "options": {
     "draftAndPublish": true
   },
   "attributes": {
-    "titre": {
+    "testt": {
       "type": "string"
     }
   }

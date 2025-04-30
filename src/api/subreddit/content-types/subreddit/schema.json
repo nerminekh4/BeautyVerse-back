@@ -1,0 +1,17 @@
+{
+  "kind": "collectionType",
+  "collectionName": "subreddits",
+  "info": {
+    "singularName": "subreddit",
+    "pluralName": "subreddits",
+    "displayName": "subreddit"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "subreddit": {
+      "type": "string"
+    }
+  }
+}
