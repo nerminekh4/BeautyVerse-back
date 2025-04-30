@@ -4,14 +4,18 @@
   "info": {
     "singularName": "subreddit",
     "pluralName": "subreddits",
-    "displayName": "subreddit"
+    "displayName": "subreddit",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "attributes": {
-    "subreddit": {
+    "name": {
       "type": "string"
+    },
+    "description": {
+      "type": "blocks"
     }
   }
 }
