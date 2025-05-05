@@ -388,6 +388,7 @@ export interface ApiCommentComment extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    likers: Schema.Attribute.Relation<'manyToMany', 'api::post.post'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -422,10 +423,15 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
       'images' | 'files' | 'videos' | 'audios',
       true
     >;
-    likes: Schema.Attribute.BigInteger & Schema.Attribute.DefaultTo<'0'>;
+    like_count: Schema.Attribute.BigInteger & Schema.Attribute.DefaultTo<'0'>;
+    likes: Schema.Attribute.Relation<
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::post.post'> &
       Schema.Attribute.Private;
+    post: Schema.Attribute.Relation<'manyToMany', 'api::comment.comment'>;
     publishedAt: Schema.Attribute.DateTime;
     subreddit: Schema.Attribute.Relation<
       'oneToOne',
@@ -458,6 +464,7 @@ export interface ApiSubredditSubreddit extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Blocks;
+    likers: Schema.Attribute.Relation<'manyToMany', 'api::post.post'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -978,6 +985,7 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    posts_liked: Schema.Attribute.Relation<'manyToMany', 'api::post.post'>;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;

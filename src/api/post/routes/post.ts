@@ -59,6 +59,33 @@ export default {
       },
     },
     {
+      method: 'POST',
+      path: '/posts/:id/unlike',
+      handler: 'post.unlike',
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
+    {
+      method: 'GET',
+      path: '/posts/:id/likers',
+      handler: 'post.getLikers',
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
+    {
+      method: 'GET',
+      path: '/posts/:id/like-count',
+      handler: 'post.getLikeCount',
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
+    {
       method: 'GET',
       path: '/posts/popular',
       handler: 'post.popular',

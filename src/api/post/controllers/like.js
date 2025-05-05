@@ -12,7 +12,7 @@ export default factories.createCoreController('api::post.post', ({ strapi }) => 
     const postId = Number(id);
 
     // Find the post with current likes relation
-    const post: any = await strapi.entityService.findOne('api::post.post', postId, {
+    const post = await strapi.entityService.findOne('api::post.post', postId, {
       populate: ['likes'],
     });
 
@@ -21,20 +21,18 @@ export default factories.createCoreController('api::post.post', ({ strapi }) => 
     }
 
     // Check if user already liked the post
-    const alreadyLiked = post.likes.some((liker: any) => liker.id === user.id);
+    const alreadyLiked = post.likes.some(liker => liker.id === user.id);
 
     if (alreadyLiked) {
       return ctx.badRequest('You have already liked this post');
     }
 
-    // Add user to likes relation using connect
+    // Add user to likes relation
     const updatedPost = await strapi.entityService.update('api::post.post', postId, {
       data: {
-        likes: {
-          connect: [user.id],
-        },
-        like_count: (Number(post.like_count) || 0) + 1,
-      } as any,
+        likes: [...post.likes.map(liker => liker.id), user.id],
+        like_count: (post.like_count || 0) + 1,
+      },
       populate: ['likes'],
     });
 
@@ -52,7 +50,7 @@ export default factories.createCoreController('api::post.post', ({ strapi }) => 
     const postId = Number(id);
 
     // Find the post with current likes relation
-    const post: any = await strapi.entityService.findOne('api::post.post', postId, {
+    const post = await strapi.entityService.findOne('api::post.post', postId, {
       populate: ['likes'],
     });
 
@@ -61,20 +59,20 @@ export default factories.createCoreController('api::post.post', ({ strapi }) => 
     }
 
     // Check if user has liked the post
-    const likedIndex = post.likes.findIndex((liker: any) => liker.id === user.id);
+    const likedIndex = post.likes.findIndex(liker => liker.id === user.id);
 
     if (likedIndex === -1) {
       return ctx.badRequest('You have not liked this post');
     }
 
-    // Remove user from likes relation using disconnect
+    // Remove user from likes relation
+    const newLikes = post.likes.filter(liker => liker.id !== user.id).map(liker => liker.id);
+
     const updatedPost = await strapi.entityService.update('api::post.post', postId, {
       data: {
-        likes: {
-          disconnect: [user.id],
-        },
-        like_count: Math.max((Number(post.like_count) || 1) - 1, 0),
-      } as any,
+        likes: newLikes,
+        like_count: Math.max((post.like_count || 1) - 1, 0),
+      },
       populate: ['likes'],
     });
 
@@ -86,7 +84,7 @@ export default factories.createCoreController('api::post.post', ({ strapi }) => 
 
     const postId = Number(id);
 
-    const post: any = await strapi.entityService.findOne('api::post.post', postId, {
+    const post = await strapi.entityService.findOne('api::post.post', postId, {
       populate: ['likes'],
     });
 
@@ -102,44 +100,12 @@ export default factories.createCoreController('api::post.post', ({ strapi }) => 
 
     const postId = Number(id);
 
-    const post: any = await strapi.entityService.findOne('api::post.post', postId);
+    const post = await strapi.entityService.findOne('api::post.post', postId);
 
     if (!post) {
       return ctx.notFound('Post not found');
     }
 
-    ctx.body = { like_count: Number(post.like_count) || 0 };
-  },
-
-  async popular(ctx) {
-    // Fetch posts sorted by like_count descending, limit to 10
-    const popularPosts = await strapi.service('api::post.post').find({
-      sort: { like_count: 'desc' },
-      limit: 10,
-    });
-
-    ctx.body = popularPosts;
-  },
-
-  async find(ctx) {
-    // Override default find to add filtering by subreddit or author
-    const { subreddit, author, ...restQuery } = ctx.query;
-
-    const filters: Record<string, any> = {};
-
-    if (subreddit) {
-      filters.subreddit = { slug: subreddit };
-    }
-
-    if (author) {
-      filters.users_permissions_user = { username: author };
-    }
-
-    const posts = await strapi.service('api::post.post').find({
-      filters,
-      ...restQuery,
-    });
-
-    ctx.body = posts;
+    ctx.body = { like_count: post.like_count || 0 };
   },
 }));

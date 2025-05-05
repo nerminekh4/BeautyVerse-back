@@ -28,7 +28,7 @@
         "audios"
       ]
     },
-    "likes": {
+    "like_count": {
       "type": "biginteger",
       "default": "0"
     },
@@ -41,6 +41,18 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::subreddit.subreddit"
+    },
+    "post": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::comment.comment",
+      "inversedBy": "likers"
+    },
+    "likes": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "posts_liked"
     }
   }
 }
