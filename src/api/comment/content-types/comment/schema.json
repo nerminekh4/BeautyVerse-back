@@ -23,11 +23,11 @@
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
     },
-    "likers": {
+    "user": {
       "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::post.post",
-      "mappedBy": "post"
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "comments"
     }
   }
 }

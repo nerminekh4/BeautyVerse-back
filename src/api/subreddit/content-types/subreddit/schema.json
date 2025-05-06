@@ -17,11 +17,10 @@
     "description": {
       "type": "blocks"
     },
-    "likers": {
+    "posts": {
       "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::post.post",
-      "mappedBy": "subreddits"
+      "relation": "oneToMany",
+      "target": "api::post.post"
     }
   }
 }

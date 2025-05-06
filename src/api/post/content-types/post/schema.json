@@ -42,17 +42,23 @@
       "relation": "oneToOne",
       "target": "api::subreddit.subreddit"
     },
-    "post": {
+    "comments": {
       "type": "relation",
-      "relation": "manyToMany",
+      "relation": "oneToMany",
       "target": "api::comment.comment",
-      "inversedBy": "likers"
+      "mappedBy": "post"
     },
     "likes": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
       "inversedBy": "posts_liked"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "posts"
     }
   }
 }
