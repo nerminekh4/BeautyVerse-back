@@ -1,61 +1,32 @@
-# 🚀 Getting started with Strapi
+# Groupe: Nermine Khadhraoui, Imene Khlifi, Imane Iguederzen, Sarah 
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+#Projet Reddit Clone - Backend
 
-### `develop`
+## Description
+Ce projet backend est une API construite avec Strapi, servant de base pour une plateforme de type Reddit. Il gère les utilisateurs, subreddits, posts, commentaires, et les interactions telles que les likes.
 
-Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
+## Technologies utilisées
+- Strapi (Headless CMS & API)
+- PostgreSQL via Neon (base de données)
+- TypeScript (pour le code backend)
 
-```
-npm run develop
-# or
-yarn develop
-```
+## Fonctionnalités principales
+- Gestion des utilisateurs avec authentification et rôles (plugin users-permissions de Strapi)
+- Gestion des subreddits (thématiques) avec nom et description
+- Gestion des posts avec titre, contenu, médias, likes, et relations vers utilisateurs et subreddits
+- Gestion des commentaires liés aux posts et aux utilisateurs
+- Fonctionnalités de like/unlike sur les posts avec compteur de likes
+- Filtrage des posts par subreddit ou auteur
+- Endpoint pour récupérer les posts populaires
 
-### `start`
+## Structure des données (schémas principaux)
+- **User** : username, email, password, rôle, relations vers posts et commentaires
+- **Subreddit** : nom, description, relation vers posts
+- **Post** : titre, contenu, médias, compteur de likes, relations vers utilisateur, subreddit, commentaires, likes
+- **Comment** : contenu, relation vers post et utilisateur
 
-Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
-
-```
-npm run start
-# or
-yarn start
-```
-
-### `build`
-
-Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
-
-```
-npm run build
-# or
-yarn build
-```
-
-## ⚙️ Deployment
-
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
-
-```
-yarn strapi deploy
-```
-
-## 📚 Learn more
-
-- [Resource center](https://strapi.io/resource-center) - Strapi resource center.
-- [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation.
-- [Strapi tutorials](https://strapi.io/tutorials) - List of tutorials made by the core team and the community.
-- [Strapi blog](https://strapi.io/blog) - Official Strapi blog containing articles made by the Strapi team and the community.
-- [Changelog](https://strapi.io/changelog) - Find out about the Strapi product updates, new features and general improvements.
-
-Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/strapi). Your feedback and contributions are welcome!
-
-## ✨ Community
-
-- [Discord](https://discord.strapi.io) - Come chat with the Strapi community including the core team.
-- [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
-- [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
-
----
-
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+## Configuration de la base de données
+- Supporte PostgreSQL (Neon) configuré via les variables d'environnement :
+  - `DATABASE_CLIENT=postgres`
+  - `DATABASE_URL` (chaine de connexion)
+  - Autres variables pour hôte, port, utilisateur, mot de passe, SSL
