@@ -394,7 +394,7 @@ export interface ApiCommentComment extends Struct.CollectionTypeSchema {
       'api::comment.comment'
     > &
       Schema.Attribute.Private;
-    post: Schema.Attribute.Relation<'oneToOne', 'api::post.post'>;
+    post: Schema.Attribute.Relation<'manyToOne', 'api::post.post'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -419,11 +419,11 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
   };
   attributes: {
     comments: Schema.Attribute.Relation<'oneToMany', 'api::comment.comment'>;
-    Content: Schema.Attribute.Blocks;
+    content: Schema.Attribute.Blocks;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Image: Schema.Attribute.Media<
+    image: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
       true
     >;
@@ -432,24 +432,18 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
       'manyToMany',
       'plugin::users-permissions.user'
     >;
+    link: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::post.post'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    subreddit: Schema.Attribute.Relation<
-      'oneToOne',
-      'api::subreddit.subreddit'
-    >;
+    slug: Schema.Attribute.String;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     user: Schema.Attribute.Relation<
       'manyToOne',
-      'plugin::users-permissions.user'
-    >;
-    users_permissions_user: Schema.Attribute.Relation<
-      'oneToOne',
       'plugin::users-permissions.user'
     >;
   };
@@ -483,6 +477,10 @@ export interface ApiSubredditSubreddit extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -1000,6 +998,10 @@ export interface PluginUsersPermissionsUser
     role: Schema.Attribute.Relation<
       'manyToOne',
       'plugin::users-permissions.role'
+    >;
+    subreddits: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::subreddit.subreddit'
     >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

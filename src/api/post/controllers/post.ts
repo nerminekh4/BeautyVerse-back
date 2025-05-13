@@ -1,6 +1,28 @@
 import { factories } from '@strapi/strapi';
 
 export default factories.createCoreController('api::post.post', ({ strapi }) => ({
+  async create(ctx) {
+    const userId = ctx.state.user.id;
+    ctx.request.body.data.user = userId; // Set the author to the current user
+    return await super.create(ctx);
+  },
+
+  async delete(ctx) {
+    const userId = ctx.state.user.id;
+    const postId = ctx.params.id;
+    const post = await strapi.entityService.findOne('api::post.post', postId, { populate: ['user'] });
+
+    if (!post) {
+      return ctx.notFound('Post not found');
+    }
+    const postAny = post as any;
+    if (postAny.user.id !== userId) {
+      return ctx.forbidden('You are not allowed to delete this post');
+    }
+
+    return await super.delete(ctx);
+  },
+
   async like(ctx) {
     const { id } = ctx.params;
     const user = ctx.state.user;

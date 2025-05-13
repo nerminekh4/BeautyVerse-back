@@ -14,10 +14,10 @@
     "title": {
       "type": "string"
     },
-    "Content": {
+    "content": {
       "type": "blocks"
     },
-    "Image": {
+    "image": {
       "type": "media",
       "multiple": true,
       "required": false,
@@ -31,16 +31,6 @@
     "like_count": {
       "type": "biginteger",
       "default": "0"
-    },
-    "users_permissions_user": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
-    },
-    "subreddit": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::subreddit.subreddit"
     },
     "comments": {
       "type": "relation",
@@ -59,6 +49,12 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "posts"
+    },
+    "link": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
     }
   }
 }

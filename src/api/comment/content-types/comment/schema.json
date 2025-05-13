@@ -15,8 +15,9 @@
     },
     "post": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::post.post"
+      "relation": "manyToOne",
+      "target": "api::post.post",
+      "inversedBy": "comments"
     },
     "author": {
       "type": "relation",

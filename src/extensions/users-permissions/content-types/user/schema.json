@@ -82,6 +82,12 @@
       "relation": "oneToMany",
       "target": "api::post.post",
       "mappedBy": "user"
+    },
+    "subreddits": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::subreddit.subreddit",
+      "mappedBy": "user"
     }
   }
 }
