@@ -55,6 +55,12 @@
     },
     "slug": {
       "type": "string"
+    },
+    "subreddit": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::subreddit.subreddit",
+      "inversedBy": "post"
     }
   }
 }

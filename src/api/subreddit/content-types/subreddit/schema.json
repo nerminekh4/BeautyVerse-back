@@ -27,6 +27,15 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "subreddits"
+    },
+    "post": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::post.post",
+      "mappedBy": "subreddit"
+    },
+    "slug": {
+      "type": "string"
     }
   }
 }
