@@ -3,7 +3,7 @@ import { factories } from '@strapi/strapi';
 export default factories.createCoreController('api::post.post', ({ strapi }) => ({
   async create(ctx) {
     const userId = ctx.state.user.id;
-    ctx.request.body.data.user = userId; // Set the author to the current user
+    ctx.request.body.data.user = userId; 
     return await super.create(ctx);
   },
 
